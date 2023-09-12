@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using FMOD;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,9 +14,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public bool isPaused = false;
     public GameObject pauseMenu;
-    
-
-
+    public bool isGrounded;
+    public FMODUnity.StudioEventEmitter emitter;
+    public FMODUnity.StudioEventEmitter jumpEmitter;
 
     public void Pause()
     {
@@ -36,12 +37,20 @@ public class PlayerController : MonoBehaviour
     private void Move(Vector2 input)
     {
         this.input = input;
+        if(input.x > 0)
+        {
+            emitter.Play();
+        }
     }
 
 
     private void Jump()
     {
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        if(isGrounded == true)
+        {
+            jumpEmitter.Play();
+        }
     }
     private void OnEnable()
     {
@@ -81,6 +90,23 @@ public class PlayerController : MonoBehaviour
             {
                 Resume();
             }
+        }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }

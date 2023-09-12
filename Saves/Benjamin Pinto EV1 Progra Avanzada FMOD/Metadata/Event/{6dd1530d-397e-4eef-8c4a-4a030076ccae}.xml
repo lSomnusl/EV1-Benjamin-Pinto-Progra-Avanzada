@@ -5,7 +5,7 @@
 			<value>SFX Walk</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{31170cf7-134b-4363-bd88-f94cbac9c155}</destination>
@@ -99,7 +99,36 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{403e4f31-be71-4bf8-931c-804510c32bda}" />
-	<object class="MultiSound" id="{5fbd839e-3c92-4a46-8c97-284baf49eccf}" />
+	<object class="MultiSound" id="{5fbd839e-3c92-4a46-8c97-284baf49eccf}">
+		<property name="looping">
+			<value>true</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{132b9bed-ab59-46dc-82da-a3ae96af34c5}</destination>
+		</relationship>
+		<relationship name="sounds">
+			<destination>{ea9559de-b3bc-46af-834e-1fa81f8d0667}</destination>
+			<destination>{916fe2a1-5975-4406-9be7-1c543014f1da}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{d8ce6a4b-e181-4094-8017-801690585833}" />
 	<object class="MixerBusFader" id="{018ee391-376b-4f81-b8f5-aa7fb8b0be8e}" />
+	<object class="RandomizerModulator" id="{132b9bed-ab59-46dc-82da-a3ae96af34c5}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>22.5</value>
+		</property>
+	</object>
+	<object class="SingleSound" id="{ea9559de-b3bc-46af-834e-1fa81f8d0667}">
+		<relationship name="audioFile">
+			<destination>{1f906360-fd0c-4a70-a266-e20041b6ffe4}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{916fe2a1-5975-4406-9be7-1c543014f1da}">
+		<relationship name="audioFile">
+			<destination>{14798eba-89a3-4528-83a2-5407703c71b3}</destination>
+		</relationship>
+	</object>
 </objects>
