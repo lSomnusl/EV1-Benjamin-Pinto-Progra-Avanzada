@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
    
     //Events
     public static event System.Action<Vector2>OnPlayerMovement;
+    public static event System.Action OnJump;
 
     [SerializeField] private PlayerInput playerinput;
     
@@ -22,6 +23,11 @@ public class InputManager : MonoBehaviour
             case "WASD":
                 Vector2 input = context.ReadValue<Vector2>();
                 OnPlayerMovement?.Invoke(input);
+                break;
+
+
+                case "Jump":
+                if(context.started) OnJump?.Invoke();
                 break;
         }
     }
