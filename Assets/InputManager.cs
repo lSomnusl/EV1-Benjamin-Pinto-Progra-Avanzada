@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour
     //Events
     public static event System.Action<Vector2>OnPlayerMovement;
     public static event System.Action OnJump;
+    public static event System.Action OnPause;
 
     [SerializeField] private PlayerInput playerinput;
     
@@ -28,6 +29,10 @@ public class InputManager : MonoBehaviour
 
                 case "Jump":
                 if(context.started) OnJump?.Invoke();
+                break;
+
+                case "Pause":
+                if(context.started) OnPause?.Invoke();
                 break;
         }
     }

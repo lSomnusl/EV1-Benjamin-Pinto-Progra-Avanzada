@@ -17,12 +17,16 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public FMODUnity.StudioEventEmitter emitter;
     public FMODUnity.StudioEventEmitter jumpEmitter;
+    public FMODUnity.StudioGlobalParameterTrigger globalVolumeMax;
+    public FMODUnity.StudioGlobalParameterTrigger globalVolumeMid;
 
     public void Pause()
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        globalVolumeMid.TriggerParameters();
+
     }
 
     public void Resume()
@@ -30,6 +34,7 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
+        globalVolumeMax.TriggerParameters();
     }
 
 
@@ -40,6 +45,10 @@ public class PlayerController : MonoBehaviour
         if(input.x > 0)
         {
             emitter.Play();
+        }
+        else
+        {
+            emitter.Stop();
         }
     }
 
@@ -56,14 +65,29 @@ public class PlayerController : MonoBehaviour
     {
         InputManager.OnPlayerMovement += Move;
         InputManager.OnJump += Jump;
+        InputManager.OnPause += HandlePause;
     }
 
     private void OnDisable()
     {
         InputManager.OnPlayerMovement -= Move;
         InputManager.OnJump -= Jump;
+        InputManager.OnPause -= HandlePause;
     }
 
+    void HandlePause()
+    {
+
+        if (isPaused == false)
+        {
+            Pause();
+        }
+        else
+        {
+            Resume();
+        }
+       
+    }
 
 
 
@@ -80,17 +104,6 @@ public class PlayerController : MonoBehaviour
         Vector2 velocity = new Vector2 (input.x,0);
         rb.position += velocity * speed * Time.fixedDeltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-           if(isPaused == false)
-            {
-                Pause();
-            }
-            else
-            {
-                Resume();
-            }
-        }
     }
 
 
