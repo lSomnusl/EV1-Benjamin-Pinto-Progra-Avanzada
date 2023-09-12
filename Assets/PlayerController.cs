@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,8 +11,28 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public float speed;
     public float jumpForce;
-
+    public bool isPaused = false;
+    public GameObject pauseMenu;
     
+
+
+
+    public void Pause()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+
+
     private void Move(Vector2 input)
     {
         this.input = input;
@@ -49,5 +70,17 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 velocity = new Vector2 (input.x,0);
         rb.position += velocity * speed * Time.fixedDeltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+           if(isPaused == false)
+            {
+                Pause();
+            }
+            else
+            {
+                Resume();
+            }
+        }
     }
 }
